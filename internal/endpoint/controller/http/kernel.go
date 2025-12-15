@@ -1,10 +1,10 @@
 package http
 
 import (
-	v1 "wn/internal/endpoint/controller/http/api/v1"
-	"wn/pkg/applogger"
+	v1 "scam/internal/endpoint/controller/http/api/v1"
+	"scam/pkg/applogger"
 
-	"wn/pkg/response"
+	"scam/pkg/response"
 
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"

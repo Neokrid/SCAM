@@ -1,7 +1,7 @@
 package apperrors
 
 import (
-	"wn/pkg/apperror"
+	"scam/pkg/apperror"
 )
 
 var (

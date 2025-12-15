@@ -1,16 +1,16 @@
 package container
 
 import (
-	"wn/config"
-	"wn/internal/endpoint/controller/http"
-	v1 "wn/internal/endpoint/controller/http/api/v1"
-	"wn/pkg/applogger"
-	"wn/pkg/database/dragonfly"
-	"wn/pkg/database/postgres"
-	"wn/pkg/httpserver"
-	"wn/pkg/response"
-	"wn/pkg/restclient"
-	"wn/pkg/trx"
+	"scam/config"
+	"scam/internal/endpoint/controller/http"
+	v1 "scam/internal/endpoint/controller/http/api/v1"
+	"scam/pkg/applogger"
+	"scam/pkg/database/dragonfly"
+	"scam/pkg/database/postgres"
+	"scam/pkg/httpserver"
+	"scam/pkg/response"
+	"scam/pkg/restclient"
+	"scam/pkg/trx"
 )
 
 type Container struct {

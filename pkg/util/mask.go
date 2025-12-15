@@ -1,8 +1,8 @@
 package util
 
 import (
-	"wn/pkg/constants"
 	"net/http"
+	"scam/pkg/constants"
 	"strings"
 )
 

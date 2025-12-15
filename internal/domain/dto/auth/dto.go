@@ -1,7 +1,7 @@
 package auth
 
 import (
-	"wn/internal/domain/enum"
+	"scam/internal/domain/enum"
 	"time"
 )
 

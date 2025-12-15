@@ -1,8 +1,8 @@
 package container
 
 import (
-	"wn/internal/application/auth"
-	userApp "wn/internal/application/user"
+	"scam/internal/application/auth"
+	userApp "scam/internal/application/user"
 )
 
 func (c *Container) getApplication() *applications {

@@ -2,14 +2,14 @@ package auth
 
 import (
 	"context"
-	"wn/internal/domain/dto/request"
-	resp "wn/internal/domain/dto/response"
-	"wn/internal/domain/enum"
-	"wn/internal/domain/services/token"
-	"wn/pkg/apperror"
-	"wn/pkg/applogger"
-	"wn/pkg/constants"
-	"wn/pkg/response"
+	"scam/internal/domain/dto/request"
+	resp "scam/internal/domain/dto/response"
+	"scam/internal/domain/enum"
+	"scam/internal/domain/services/token"
+	"scam/pkg/apperror"
+	"scam/pkg/applogger"
+	"scam/pkg/constants"
+	"scam/pkg/response"
 
 	"github.com/gin-gonic/gin"
 )

@@ -1,4 +1,4 @@
-module wn
+module scam
 
 go 1.23.0
 

@@ -2,15 +2,15 @@ package container
 
 import (
 	"log"
-	"wn/internal/endpoint/controller/http"
-	"wn/pkg/applogger"
-	"wn/pkg/database/dragonfly"
-	"wn/pkg/database/postgres"
-	"wn/pkg/httpserver"
-	"wn/pkg/migrator"
-	"wn/pkg/response"
-	"wn/pkg/restclient"
-	"wn/pkg/trx"
+	"scam/internal/endpoint/controller/http"
+	"scam/pkg/applogger"
+	"scam/pkg/database/dragonfly"
+	"scam/pkg/database/postgres"
+	"scam/pkg/httpserver"
+	"scam/pkg/migrator"
+	"scam/pkg/response"
+	"scam/pkg/restclient"
+	"scam/pkg/trx"
 )
 
 func (c *Container) Migrate() error {

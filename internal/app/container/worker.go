@@ -2,8 +2,8 @@ package container
 
 import (
 	"fmt"
-	"wn/internal/endpoint/worker/file"
-	"wn/pkg/cron"
+	"scam/internal/endpoint/worker/file"
+	"scam/pkg/cron"
 )
 
 type workers struct {

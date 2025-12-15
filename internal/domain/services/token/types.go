@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	apperrors "wn/internal/errors"
+	apperrors "scam/internal/errors"
 
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/google/uuid"

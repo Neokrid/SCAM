@@ -3,9 +3,9 @@ package smtp
 import (
 	"context"
 	"encoding/json"
-	"wn/internal/domain/dto/auth"
-	"wn/pkg/applogger"
-	"wn/pkg/database/dragonfly"
+	"scam/internal/domain/dto/auth"
+	"scam/pkg/applogger"
+	"scam/pkg/database/dragonfly"
 	"time"
 
 	"github.com/redis/go-redis/v9"

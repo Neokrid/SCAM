@@ -3,11 +3,12 @@ package applogger
 import (
 	"context"
 	"fmt"
+	"scam/pkg/constants"
+	"strings"
+
 	"go.opentelemetry.io/otel/trace"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
-	"wn/pkg/constants"
-	"strings"
 )
 
 type logger struct {

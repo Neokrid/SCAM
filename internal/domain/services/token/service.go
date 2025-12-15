@@ -2,9 +2,9 @@ package token
 
 import (
 	"context"
-	apperrors "wn/internal/errors"
-	"wn/internal/infrastructure/repository/tokens"
-	"wn/pkg/util"
+	apperrors "scam/internal/errors"
+	"scam/internal/infrastructure/repository/tokens"
+	"scam/pkg/util"
 	"time"
 
 	"github.com/google/uuid"

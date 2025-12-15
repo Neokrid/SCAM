@@ -3,7 +3,7 @@ package tokens
 import (
 	"context"
 	"database/sql"
-	"wn/pkg/database/postgres"
+	"scam/pkg/database/postgres"
 	"time"
 
 	"github.com/Masterminds/squirrel"

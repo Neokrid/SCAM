@@ -1,6 +1,6 @@
 package container
 
-import smtpCache "wn/internal/infrastructure/cache/smtp"
+import smtpCache "scam/internal/infrastructure/cache/smtp"
 
 func (c *Container) getCaches() *cache {
 	if c.caches == nil {

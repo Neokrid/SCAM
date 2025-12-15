@@ -1,8 +1,8 @@
 package v1
 
 import (
-	"wn/internal/endpoint/controller/http/api/v1/auth"
-	"wn/internal/endpoint/controller/http/api/v1/user"
+	"scam/internal/endpoint/controller/http/api/v1/auth"
+	"scam/internal/endpoint/controller/http/api/v1/user"
 
 	"github.com/gin-gonic/gin"
 )

@@ -2,9 +2,9 @@ package file
 
 import (
 	"context"
-	"wn/pkg/applogger"
-	"wn/pkg/constants"
-	"wn/pkg/util"
+	"scam/pkg/applogger"
+	"scam/pkg/constants"
+	"scam/pkg/util"
 )
 
 type fileService interface {

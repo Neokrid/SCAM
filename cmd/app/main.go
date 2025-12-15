@@ -2,8 +2,8 @@ package main
 
 import (
 	"log"
-	"wn/config"
-	"wn/internal/app"
+	"scam/config"
+	"scam/internal/app"
 )
 
 // @title           WALRUS NOTES API
@@ -12,7 +12,7 @@ import (
 
 const configDir = "./config/main.yaml"
 
-func main() {	
+func main() {
 	cfg, err := config.NewConfig(configDir)
 
 	if err != nil {

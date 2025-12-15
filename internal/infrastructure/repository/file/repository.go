@@ -3,7 +3,7 @@ package file
 import (
 	"context"
 	"fmt"
-	"wn/pkg/database/postgres"
+	"scam/pkg/database/postgres"
 
 	"github.com/Masterminds/squirrel"
 	"github.com/pkg/errors"

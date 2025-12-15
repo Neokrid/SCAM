@@ -1,7 +1,7 @@
 package user
 
 import (
-	"wn/internal/infrastructure/repository/user"
+	"scam/internal/infrastructure/repository/user"
 	"time"
 
 	"github.com/google/uuid"

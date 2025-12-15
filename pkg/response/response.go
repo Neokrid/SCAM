@@ -3,7 +3,7 @@ package response
 import (
 	"context"
 	"net/http"
-	"wn/pkg/constants"
+	"scam/pkg/constants"
 )
 
 type meta struct {

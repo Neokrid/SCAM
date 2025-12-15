@@ -6,12 +6,13 @@ import (
 	"crypto/tls"
 	"crypto/x509"
 	"fmt"
-	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 	"io"
 	"log"
-	"wn/pkg/applogger"
 	"net/http"
 	"os"
+	"scam/pkg/applogger"
+
+	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 )
 
 type RestClient interface {

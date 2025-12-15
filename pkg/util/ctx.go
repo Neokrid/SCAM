@@ -3,7 +3,7 @@ package util
 import (
 	"context"
 	"fmt"
-	"wn/pkg/constants"
+	"scam/pkg/constants"
 
 	"github.com/google/uuid"
 )

@@ -3,9 +3,9 @@ package user
 import (
 	"context"
 	"database/sql"
-	apperrors "wn/internal/errors"
-	"wn/internal/infrastructure/repository/common"
-	"wn/pkg/database/postgres"
+	apperrors "scam/internal/errors"
+	"scam/internal/infrastructure/repository/common"
+	"scam/pkg/database/postgres"
 
 	"github.com/google/uuid"
 	"github.com/pkg/errors"

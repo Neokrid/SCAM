@@ -4,12 +4,12 @@ import (
 	"context"
 	"mime/multipart"
 
-	"wn/internal/domain/dto/request"
-	respDto "wn/internal/domain/dto/response"
-	userDto "wn/internal/domain/dto/user"
-	"wn/internal/infrastructure/repository/user"
-	"wn/pkg/applogger"
-	"wn/pkg/trx"
+	"scam/internal/domain/dto/request"
+	respDto "scam/internal/domain/dto/response"
+	userDto "scam/internal/domain/dto/user"
+	"scam/internal/infrastructure/repository/user"
+	"scam/pkg/applogger"
+	"scam/pkg/trx"
 
 	"github.com/google/uuid"
 )

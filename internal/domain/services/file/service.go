@@ -9,9 +9,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	"wn/internal/infrastructure/repository/file"
-	"wn/pkg/applogger"
-	"wn/pkg/util"
+	"scam/internal/infrastructure/repository/file"
+	"scam/pkg/applogger"
+	"scam/pkg/util"
 
 	"github.com/pkg/errors"
 )

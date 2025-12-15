@@ -1,9 +1,9 @@
 package container
 
 import (
-	"wn/internal/infrastructure/repository/file"
-	tokensRepo "wn/internal/infrastructure/repository/tokens"
-	userRepo "wn/internal/infrastructure/repository/user"
+	"scam/internal/infrastructure/repository/file"
+	tokensRepo "scam/internal/infrastructure/repository/tokens"
+	userRepo "scam/internal/infrastructure/repository/user"
 )
 
 func (c *Container) getRepositories() *repositories {

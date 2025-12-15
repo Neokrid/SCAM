@@ -1,10 +1,10 @@
 package container
 
 import (
-	"wn/internal/domain/services/file"
-	smtpSrv "wn/internal/domain/services/smtp"
-	tokenSrv "wn/internal/domain/services/token"
-	userSrv "wn/internal/domain/services/user"
+	"scam/internal/domain/services/file"
+	smtpSrv "scam/internal/domain/services/smtp"
+	tokenSrv "scam/internal/domain/services/token"
+	userSrv "scam/internal/domain/services/user"
 )
 
 func (c *Container) getServices() *services {

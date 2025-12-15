@@ -2,8 +2,8 @@ package app
 
 import (
 	"log"
-	"wn/config"
-	"wn/internal/app/container"
+	"scam/config"
+	"scam/internal/app/container"
 
 	"os"
 	"os/signal"

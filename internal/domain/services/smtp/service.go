@@ -6,11 +6,11 @@ import (
 	"math"
 	"math/rand"
 	"net/smtp"
-	"wn/internal/domain/dto/auth"
-	"wn/internal/domain/enum"
-	apperrors "wn/internal/errors"
-	"wn/pkg/applogger"
-	"wn/pkg/util"
+	"scam/internal/domain/dto/auth"
+	"scam/internal/domain/enum"
+	apperrors "scam/internal/errors"
+	"scam/pkg/applogger"
+	"scam/pkg/util"
 	"time"
 )
 
