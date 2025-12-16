@@ -14,7 +14,6 @@ func (c *Container) getHTTPDispatcher() *v1.Dispatcher {
 			auth.NewController(
 				c.getLogger(),
 				c.getResponseBuilder(),
-				c.getApplication().getUserApplicationService(),
 				c.getApplication().getAuthApplicationService(),
 			),
 

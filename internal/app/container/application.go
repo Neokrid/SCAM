@@ -37,7 +37,6 @@ func (s *applications) getAuthApplicationService() *auth.Service {
 		s.auth = auth.NewService(
 			s.c.getTransactionManager(),
 			s.c.getLogger(),
-
 			s.c.getServices().getUserService(),
 			s.c.getServices().getSMTPService(),
 			s.c.getServices().getTokenService(),

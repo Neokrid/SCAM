@@ -14,32 +14,30 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type userService interface {
-	RegisterUser(ctx context.Context, credentials request.RegisterCredentials) (*resp.RegisterResponse, error)
-}
-
 type authService interface {
 	SendConfirmationCode(ctx context.Context, req request.LoginRequest, action enum.EmailCodeAction) (*resp.SendCodeResponse, error)
 	ConfirmCode(ctx context.Context, req request.ConfimationCodeRequest) error
 	Login(ctx context.Context, req request.LoginRequest) (*token.UserTokens, error)
 	RefreshTokens(ctx context.Context, req token.UserTokens) (*token.UserTokens, error)
+	RegisterUser(ctx context.Context, credentials request.RegisterCredentials) (*resp.RegisterResponse, error)
 }
 
 type Controller struct {
 	lgr     applogger.Logger
 	builder *response.Builder
 
-	userService userService
 	authService authService
 }
 
-func NewController(logger applogger.Logger, builder *response.Builder, userService userService, authService authService) *Controller {
+func NewController(
+	logger applogger.Logger,
+	builder *response.Builder,
+	authSvc authService,
+) *Controller {
 	return &Controller{
-		lgr:     logger,
-		builder: builder,
-
-		userService: userService,
-		authService: authService,
+		lgr:         logger,
+		builder:     builder,
+		authService: authSvc,
 	}
 }
 
@@ -73,7 +71,7 @@ func (h *Controller) register(c *gin.Context) {
 		_ = c.Error(apperror.NewBadRequestError(err.Error(), constants.BindBodyError))
 		return
 	}
-	userId, err := h.userService.RegisterUser(ctx, req)
+	userId, err := h.authService.RegisterUser(ctx, req)
 	if err != nil {
 		_ = c.Error(err)
 		return
