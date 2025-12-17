@@ -15,7 +15,6 @@ import (
 )
 
 type userService interface {
-	CreateUserFromAuthCredentials(ctx context.Context, credintials request.RegisterCredentials) (*userDto.User, error)
 	UpdateUser(ctx context.Context, userId uuid.UUID, filter *user.UserUpdateParams) error
 	GetUserById(ctx context.Context, userId uuid.UUID, password string) (*userDto.User, error)
 }
@@ -47,16 +46,6 @@ func NewService(
 }
 
 // todo add reg exp check for password and username and email
-func (srv *Service) RegisterUser(ctx context.Context, credentials request.RegisterCredentials) (*respDto.RegisterResponse, error) {
-	user, err := srv.userService.CreateUserFromAuthCredentials(ctx, credentials)
-	if err != nil {
-		return nil, err
-	}
-	return &respDto.RegisterResponse{
-		UserId: user.Id,
-	}, nil
-
-}
 
 func (srv *Service) ChangeProfilePicture(ctx context.Context, req request.ChangeProfilePicture, host string) (*respDto.ChangePictureResponse, error) {
 	filename, err := srv.fileService.NewFile(ctx, req.File)

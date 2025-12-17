@@ -20,6 +20,7 @@ import (
 var codeDelay time.Duration = time.Duration(time.Minute * 1)
 
 type userService interface {
+	CreateUserFromAuthCredentials(ctx context.Context, credintials request.RegisterCredentials) (*user.User, error)
 	GetUserByEmail(ctx context.Context, email string, password string) (*user.User, error)
 	UpdateUser(ctx context.Context, userId uuid.UUID, filter *userRepository.UserUpdateParams) error
 }
@@ -60,7 +61,33 @@ func NewService(
 	}
 }
 
-// todo add check is confirmed email
+func (srv *Service) RegisterUser(ctx context.Context, credentials request.RegisterCredentials) (*dto.RegisterResponse, error) {
+	var err error
+	var user *user.User
+	if err = srv.tx.Transaction(ctx, func(ctx context.Context) error {
+		user, err = srv.userService.CreateUserFromAuthCredentials(ctx, credentials)
+		if err != nil {
+			return err
+		}
+
+		_, err = srv.SendConfirmationCode(ctx, request.LoginRequest{
+			Email:    credentials.Email,
+			Password: credentials.Password,
+		}, enum.ConfirmCode)
+		if err != nil {
+			_ = ctx.Err().Error()
+			return err
+		}
+		return err
+	}); err != nil {
+		return nil, err
+	}
+
+	return &dto.RegisterResponse{
+		UserId: user.Id,
+	}, nil
+
+}
 
 func (srv *Service) SendConfirmationCode(ctx context.Context, req request.LoginRequest, action enum.EmailCodeAction) (*dto.SendCodeResponse, error) {
 	_, err := srv.userService.GetUserByEmail(ctx, req.Email, req.Password)

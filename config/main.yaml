@@ -5,13 +5,13 @@ http:
   writeTimeout: 10s
 
 postgres:
-  username: "postgres"
-  host: "localhost"
-  port: "5432"
-  dbname: "postgres"
-  sslmode: "disable"
-  password: "postgres"
-  schema: "walrus"
+  username: 'postgres'
+  host: 'localhost'
+  port: '5432'
+  dbname: 'postgres'
+  sslmode: 'disable'
+  password: 'postgres'
+  schema: 'public'
   poolMax: 50
   poolMin: 20
   healthCheckPeriod: 10s
@@ -19,33 +19,33 @@ postgres:
   connectionMaxLifeTime: 1800s
 
 log:
-  level: "INFO"
+  level: 'INFO'
   requestLogEnabled: true
   requestLogWithBody: true
 
 internal:
-  path: "/wn"
-  environment: ".env"
+  path: '/scam'
+  environment: '.env'
   logInputParamOnErr: true
 
 cache:
-  url: "localhost:6379"
-  username: ""
-  password: ""
+  url: 'localhost:6379'
+  username: ''
+  password: ''
 
 response:
   exportError: true
 
 email:
-  ownerEmail: "templeapi88@gmail.com"
-  addres: "smtp.gmail.com:587"
+  ownerEmail: 'anineo225@gmail.com'
+  addres: 'smtp.gmail.com:587'
   codeLenght: 6
-  codeExp: "5m"
-  minTTL: "5m"
+  codeExp: '5m'
+  minTTL: '5m'
 
 jwt:
-  accessTtl: "100h"
-  refreshTtl: "100h"
+  accessTtl: '100h'
+  refreshTtl: '100h'
 
 cron:
-  generateStatics: "@every 5s"
+  generateStatics: '@every 5s'

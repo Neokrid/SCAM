@@ -51,6 +51,7 @@ func NewService(lgr applogger.Logger, cfg *Config, cacheRepo cacheRepo) *Service
 }
 
 func (srv *Service) SendConfirmEmailMessage(email, code, action string) error {
+	srv.logger.Warnf("SMTP DEBUG: sending email to=%s code=%s action=%s", email, code, action)
 	baseText := `
 Hello!
 You ask for %s function.
@@ -103,6 +104,7 @@ func (srv *Service) SendConfirmEmailCode(ctx context.Context, email string, acti
 	}()
 
 	return err
+
 }
 
 func (srv *Service) ConfirmCode(ctx context.Context, email string, code string) (*auth.ConfirmationCode, error) {
