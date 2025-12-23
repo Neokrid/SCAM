@@ -8,9 +8,9 @@ import (
 	"scam/internal/domain/dto/user"
 	apperrors "scam/internal/errors"
 	userRepository "scam/internal/infrastructure/repository/user"
+	"time"
 
 	"scam/pkg/applogger"
-	"scam/pkg/constants"
 	"scam/pkg/trx"
 	"scam/pkg/util"
 
@@ -50,18 +50,23 @@ func (srv *Service) CreateUserFromAuthCredentials(ctx context.Context, credintia
 	user := user.User{
 		Id:        util.NewUUID(),
 		Username:  credintials.Username,
+		FullName:  credintials.FullName,
 		Email:     credintials.Email,
 		ImgUrl:    "base.png",
+		Status:    "",
+		BirthDate: time.Time{},
 		CreatedAt: util.GetCurrentUTCTime(),
 	}
 	userEntity := userRepository.User{
 		Id:        user.Id,
 		Username:  user.Username,
+		FullName:  user.FullName,
 		Email:     user.Email,
 		Password:  generatePasswordHash(credintials.Password),
 		ImgUrl:    "base.png",
+		Status:    user.Status,
+		BirthDate: user.BirthDate,
 		CreatedAt: user.CreatedAt,
-		Role:      constants.ClientRole,
 	}
 	err := srv.userRepo.CreateUser(ctx, &userEntity)
 	return &user, err

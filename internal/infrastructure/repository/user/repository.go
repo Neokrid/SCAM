@@ -6,6 +6,7 @@ import (
 	apperrors "scam/internal/errors"
 	"scam/internal/infrastructure/repository/common"
 	"scam/pkg/database/postgres"
+	"time"
 
 	"github.com/google/uuid"
 	"github.com/pkg/errors"
@@ -23,10 +24,12 @@ func NewRepository(conn postgres.Connection) *Repository {
 
 func (repo *Repository) CreateUser(ctx context.Context, item *User) error {
 	query := `
-		INSERT INTO users VALUES
-		($1, $2, $3, $4, $5, $6, $7, $8)
+		INSERT INTO users (id, username, email, password, img_url,
+		confirmed_email, created_at, full_name, status, birth_date, last_seen_at)
+		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, NOW())
 	`
-	_, err := repo.conn.Exec(ctx, query, item.Id, item.Username, item.Email, item.Password, item.Role, item.ImgUrl, item.ConfirmedEmail, item.CreatedAt)
+	_, err := repo.conn.Exec(ctx, query, item.Id, item.Username, item.Email, item.Password, item.ImgUrl,
+		item.ConfirmedEmail, item.CreatedAt, item.FullName, item.Status, item.BirthDate)
 	if err != nil {
 		if common.IsUniqueErr(err) {
 			return apperrors.NotUnique
@@ -43,6 +46,15 @@ func (repo *Repository) UpdateUser(ctx context.Context, userId uuid.UUID, update
 
 	if updateParams.Username != nil {
 		builder = builder.Set("username", *updateParams.Username)
+	}
+	if updateParams.Status != nil {
+		builder = builder.Set("status", *updateParams.Status)
+	}
+	if updateParams.FullName != nil {
+		builder = builder.Set("full_name", *updateParams.FullName)
+	}
+	if updateParams.BirthDate != nil {
+		builder = builder.Set("birth_date", *updateParams.BirthDate)
 	}
 	if updateParams.Email != nil {
 		builder = builder.Set("email", *updateParams.Email)
@@ -75,7 +87,9 @@ func (repo *Repository) UpdateUser(ctx context.Context, userId uuid.UUID, update
 
 func (repo *Repository) GetUser(ctx context.Context, filter UserFilter) (*User, bool, error) {
 	var output User
-	builder := squirrel.Select("u.*").From("users u")
+	builder := squirrel.Select("id", "username", "email", "password", "img_url", "confirmed_email",
+		"created_at", "full_name", "status", "birth_date", "last_seen_at").
+		From("users")
 
 	if filter.Id != nil {
 		builder = builder.Where(squirrel.Eq{"id": filter.Id})
@@ -94,7 +108,8 @@ func (repo *Repository) GetUser(ctx context.Context, filter UserFilter) (*User, 
 		return nil, false, errors.Wrap(err, "squirrel.ToSql")
 	}
 	err = repo.conn.QueryRow(ctx, query, args...).
-		Scan(&output.Id, &output.Username, &output.Email, &output.Password, &output.Role, &output.ImgUrl, &output.ConfirmedEmail, &output.CreatedAt)
+		Scan(&output.Id, &output.Username, &output.Email, &output.Password, &output.ImgUrl, &output.ConfirmedEmail,
+			&output.CreatedAt, &output.FullName, &output.Status, &output.BirthDate, &output.LastSeenAt)
 
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
@@ -107,4 +122,40 @@ func (repo *Repository) GetUser(ctx context.Context, filter UserFilter) (*User, 
 	}
 
 	return &output, true, nil
+}
+
+func (repo *Repository) LastSeenInOnline(ctx context.Context, UserId uuid.UUID) error {
+	query, args, err := squirrel.Update("users").
+		Set("last_seen_at", squirrel.Expr("NOW()")).
+		Where(squirrel.Eq{"id": UserId}).
+		PlaceholderFormat(squirrel.Dollar).
+		ToSql()
+	if err != nil {
+		return errors.Wrap(err, "LastSeenInOnline ToSql")
+	}
+	_, err = repo.conn.Exec(ctx, query, args...)
+	if err != nil {
+		return errors.Wrap(err, "repo.conn.Exec")
+	}
+	return nil
+}
+
+func (repo *Repository) IsOnline(ctx context.Context, UserId uuid.UUID, ttl int) (bool, error) {
+	var lastSeen time.Time
+	query, args, err := squirrel.Select("last_seen_at").
+		From("users").
+		Where(squirrel.Eq{"id": UserId}).
+		PlaceholderFormat(squirrel.Dollar).
+		ToSql()
+	if err != nil {
+		return false, errors.Wrap(err, "isOnline ToSql")
+	}
+	err = repo.conn.QueryRow(ctx, query, args...).Scan(&lastSeen)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return false, nil
+		}
+		return false, errors.Wrap(err, "isOnline repo.conn.QueryRow.Scan")
+	}
+	return time.Since(lastSeen) <= time.Duration(ttl)*time.Minute, nil
 }
