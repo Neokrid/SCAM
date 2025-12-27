@@ -20,6 +20,10 @@ var (
 
 	NoNewPassword = apperror.NewBadRequestError("no new password", "no_new_password")
 	NotUnique     = apperror.NewInvalidDataError("not unique", "not_unique")
+
+	NoPermissionsRequest  = apperror.NewBadRequestError("no permission to respond to this request", "no_permission_to_respond_to_this_request")
+	InvalidStatus         = apperror.NewBadRequestError("invalid status", "invalid_status")
+	FriendRequestNotFound = apperror.NewInvalidDataError("friend request not found", "friend_request_not_found")
 )
 
 // коды динамических ошибок:

@@ -3,6 +3,7 @@ package container
 import (
 	"scam/internal/domain/services/file"
 	smtpSrv "scam/internal/domain/services/smtp"
+	"scam/internal/domain/services/social"
 	tokenSrv "scam/internal/domain/services/token"
 	userSrv "scam/internal/domain/services/user"
 )
@@ -17,10 +18,11 @@ func (c *Container) getServices() *services {
 type services struct {
 	c *Container
 
-	user  *userSrv.Service
-	smtp  *smtpSrv.Service
-	token *tokenSrv.Service
-	file  *file.Service
+	user   *userSrv.Service
+	social *social.Service
+	smtp   *smtpSrv.Service
+	token  *tokenSrv.Service
+	file   *file.Service
 }
 
 func (s *services) getUserService() *userSrv.Service {
@@ -74,4 +76,15 @@ func (s *services) getFileService() *file.Service {
 
 	}
 	return s.file
+}
+
+func (s *services) getSocialService() *social.Service {
+	if s.social == nil {
+		s.social = social.NewService(
+			s.c.getTransactionManager(),
+			s.c.getLogger(),
+			s.c.getRepositories().getSocialRepository(),
+		)
+	}
+	return s.social
 }

@@ -26,3 +26,12 @@ func UserDtoFromEntity(entity *user.User) *User {
 		CreatedAt: entity.CreatedAt,
 	}
 }
+
+type FriendRequestWithUser struct {
+	ID        uuid.UUID `json:"id"`
+	UserID    uuid.UUID `json:"user_id"`
+	Username  string    `json:"username"`
+	ImgURL    string    `json:"img_url"`
+	Status    string    `json:"status"`
+	CreatedAt time.Time `json:"created_at"`
+}

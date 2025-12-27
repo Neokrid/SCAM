@@ -3,6 +3,7 @@ package container
 import (
 	v1 "scam/internal/endpoint/controller/http/api/v1"
 	"scam/internal/endpoint/controller/http/api/v1/auth"
+	"scam/internal/endpoint/controller/http/api/v1/social"
 	"scam/internal/endpoint/controller/http/api/v1/user"
 )
 
@@ -21,6 +22,11 @@ func (c *Container) getHTTPDispatcher() *v1.Dispatcher {
 				c.getLogger(),
 				c.getResponseBuilder(),
 				c.getApplication().getUserApplicationService(),
+			),
+			social.NewController(
+				c.getLogger(),
+				c.getResponseBuilder(),
+				c.getApplication().getSocialApplicationService(),
 			),
 		)
 	}
