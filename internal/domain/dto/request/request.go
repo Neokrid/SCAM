@@ -2,6 +2,7 @@ package request
 
 import (
 	"mime/multipart"
+	"time"
 
 	"github.com/google/uuid"
 )
@@ -9,6 +10,7 @@ import (
 // RegisterCredentials
 // @Schema
 type RegisterCredentials struct {
+	FullName string `json:"fullName" binding:"required"`
 	Username string `json:"username" binding:"required"`
 	Email    string `json:"email" binding:"required"`
 	Password string `json:"password" binding:"required"`
@@ -40,4 +42,13 @@ type ForgotPasswordRequest struct {
 type ChangeProfilePicture struct {
 	File   *multipart.FileHeader `form:"file" binding:"required"`
 	UserId uuid.UUID
+}
+
+// UpdateProfileRequest
+// @Schema
+type UpdateProfileRequest struct {
+	FullName  string    `json:"fullName"`
+	Status    string    `json:"status"`
+	Username  string    `json:"username"`
+	BirthDate time.Time `json:"birthDate"`
 }

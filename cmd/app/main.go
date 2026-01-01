@@ -6,9 +6,9 @@ import (
 	"scam/internal/app"
 )
 
-// @title           WALRUS NOTES API
+// @title           SCAM API
 // @version         1.0
-// @description     This is walrus notes api service.
+// @description     This is SCAM api service.
 
 const configDir = "./config/main.yaml"
 

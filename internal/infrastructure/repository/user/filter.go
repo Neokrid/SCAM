@@ -1,6 +1,10 @@
 package user
 
-import "github.com/google/uuid"
+import (
+	"time"
+
+	"github.com/google/uuid"
+)
 
 type UserFilter struct {
 	Id    *uuid.UUID
@@ -12,8 +16,11 @@ type UserFilter struct {
 // пароль передавать незахешированным. На уровне сервиса произойдет хеш
 type UserUpdateParams struct {
 	Username       *string
+	FullName       *string
+	Status         *string
 	Email          *string
 	Password       *string
 	ImgUrl         *string
 	ConfirmedEmail *bool
+	BirthDate      *time.Time
 }
