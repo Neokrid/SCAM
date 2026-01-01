@@ -224,5 +224,5 @@ func (h *Controller) removeFollower(c *gin.Context) {
 		_ = c.Error(err)
 		return
 	}
-	c.AbortWithStatusJSON(h.builder.BuildSuccessResponseBody(c, nil))
+	c.AbortWithStatusJSON(h.builder.BuildSuccessResponseBody(ctx, nil))
 }
