@@ -26,7 +26,7 @@ type userService interface {
 }
 
 type tokenService interface {
-	GenerateUserTokens(ctx context.Context, id uuid.UUID, role string) (*token.UserTokens, error)
+	GenerateUserTokens(ctx context.Context, id uuid.UUID) (*token.UserTokens, error)
 	ParseToken(token string) (*token.CustomClaims, error)
 	RefreshTokens(ctx context.Context, access, refresh string) (*token.UserTokens, error)
 }
@@ -130,7 +130,7 @@ func (srv *Service) Login(ctx context.Context, req request.LoginRequest) (*token
 	if err != nil {
 		return nil, err
 	}
-	return srv.tokenService.GenerateUserTokens(ctx, u.Id, u.Role)
+	return srv.tokenService.GenerateUserTokens(ctx, u.Id)
 }
 
 func (srv *Service) RefreshTokens(ctx context.Context, req token.UserTokens) (*token.UserTokens, error) {

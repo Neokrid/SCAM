@@ -12,10 +12,13 @@ INSERT INTO roles VALUES
 CREATE TABLE IF NOT EXISTS users(
     id uuid primary key,
     username varchar unique not null,
+    full_name varchar not null,
+    birth_date DATE,
+    status varchar default '',
     email varchar unique not null,
     password varchar not null,
-    role varchar not null,
-    img_url varchar not null,
+    img_url varchar not null DEFAULT '',
     confirmed_email boolean default 'f',
+    last_seen_at TIMESTAMP DEFAULT NOW(),
     created_at timestamptz not null
 );

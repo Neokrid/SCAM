@@ -19,6 +19,7 @@ import (
 type userService interface {
 	ChangeProfilePicture(ctx context.Context, req request.ChangeProfilePicture, host string) (*resp.ChangePictureResponse, error)
 	GetUserById(ctx context.Context, userId uuid.UUID, host string) (*user.User, error)
+	UpdateMyProfile(ctx context.Context, userId uuid.UUID, req request.UpdateProfileRequest) error
 }
 
 type Controller struct {
@@ -41,7 +42,9 @@ func (h *Controller) Init(api, authApi *gin.RouterGroup) {
 	user := api.Group("/user")
 	userAuth := authApi.Group("/user")
 	{
-		userAuth.POST("/picture", h.changeProfilePicture)
+		userAuth.PUT("/picture", h.changeProfilePicture)
+		userAuth.GET("me", h.getMyProfile)
+		userAuth.PUT("me", h.updateMyProfile)
 		user.GET("/profile/:id", h.getUserById)
 	}
 }
@@ -100,6 +103,72 @@ func (h *Controller) getUserById(c *gin.Context) {
 	}
 
 	user, err := h.userService.GetUserById(ctx, id, c.Request.Host)
+	if err != nil {
+		_ = c.Error(err)
+		return
+	}
+
+	c.AbortWithStatusJSON(h.builder.BuildSuccessResponseBody(ctx, user))
+}
+
+// @Summary get_my_profile
+// @Description get my profile
+// @Tags user
+// @Produce json
+// @Param X-Request-Id header string true "Request id identity"
+// @Param Authorization header string true "auth token"
+// @Success 200 {object} response.Response{data=user.User}
+// @Failure 400 {object} response.Response{} "possible codes: invalid_token, invalid_authorization_header"
+// @Router /rl/api/v1/user/me [get]
+func (h *Controller) getMyProfile(c *gin.Context) {
+	ctx := c.Request.Context()
+
+	userId, err := util.GetUserId(ctx)
+	if err != nil {
+		_ = c.Error(apperrors.InvalidAuthorizationHeader)
+		return
+	}
+
+	user, err := h.userService.GetUserById(ctx, userId, c.Request.Host)
+	if err != nil {
+		_ = c.Error(err)
+		return
+	}
+
+	c.AbortWithStatusJSON(h.builder.BuildSuccessResponseBody(ctx, user))
+}
+
+// @Summary update_my_profile
+// @Description обновляет мой профиль
+// @Tags user
+// @Produce json
+// @Param data body request.UpdateProfileRequest true "data"
+// @Param X-Request-Id header string true "Request id identity"
+// @Param Authorization header string true "auth token"
+// @Success 200 {object} response.Response{data=user.User}
+// @Failure 400 {object} response.Response{} "possible codes: invalid_token, bind_body"
+// @Router /rl/api/v1/user/me [put]
+func (h *Controller) updateMyProfile(c *gin.Context) {
+	ctx := c.Request.Context()
+
+	userId, err := util.GetUserId(ctx)
+	if err != nil {
+		_ = c.Error(apperrors.InvalidAuthorizationHeader)
+		return
+	}
+	var req request.UpdateProfileRequest
+	if err := c.BindJSON(&req); err != nil {
+		_ = c.Error(apperror.NewBadRequestError(err.Error(), constants.BindBodyError))
+		return
+	}
+
+	err = h.userService.UpdateMyProfile(ctx, userId, req)
+	if err != nil {
+		_ = c.Error(err)
+		return
+	}
+
+	user, err := h.userService.GetUserById(ctx, userId, c.Request.Host)
 	if err != nil {
 		_ = c.Error(err)
 		return

@@ -1,4 +1,4 @@
-package auth
+package user
 
 import (
 	"context"
@@ -24,11 +24,11 @@ type fileService interface {
 }
 
 type Service struct {
-	tx     trx.TransactionManager
-	logger applogger.Logger
-
+	tx          trx.TransactionManager
+	logger      applogger.Logger
 	userService userService
 	fileService fileService
+	onlineTTL   int
 }
 
 func NewService(
@@ -36,12 +36,14 @@ func NewService(
 	logger applogger.Logger,
 	userService userService,
 	fileService fileService,
+	onlineTTL int,
 ) *Service {
 	return &Service{
 		tx:          tx,
 		logger:      logger,
 		userService: userService,
 		fileService: fileService,
+		onlineTTL:   onlineTTL,
 	}
 }
 
@@ -55,6 +57,9 @@ func (srv *Service) ChangeProfilePicture(ctx context.Context, req request.Change
 	err = srv.userService.UpdateUser(ctx, req.UserId, &user.UserUpdateParams{
 		ImgUrl: &filename,
 	})
+	if err != nil {
+		return nil, err
+	}
 	return &respDto.ChangePictureResponse{
 		NewImgurl: host + "/statics/images/" + filename,
 	}, err
@@ -67,4 +72,18 @@ func (srv *Service) GetUserById(ctx context.Context, userId uuid.UUID, host stri
 	}
 	u.ImgUrl = host + "/statics/images/" + u.ImgUrl
 	return u, nil
+}
+
+func (srv *Service) UpdateMyProfile(ctx context.Context, userID uuid.UUID, req request.UpdateProfileRequest) error {
+	err := srv.userService.UpdateUser(ctx, userID, &user.UserUpdateParams{
+		FullName:  &req.FullName,
+		Status:    &req.Status,
+		BirthDate: &req.BirthDate,
+		Username:  &req.Username,
+	})
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

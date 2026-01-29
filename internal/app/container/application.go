@@ -26,9 +26,9 @@ func (s *applications) getUserApplicationService() *userApp.Service {
 		s.user = userApp.NewService(
 			s.c.getTransactionManager(),
 			s.c.getLogger(),
-
 			s.c.getServices().getUserService(),
 			s.c.getServices().getFileService(),
+			5, //добавить в env
 		)
 	}
 	return s.user

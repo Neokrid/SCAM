@@ -3,6 +3,7 @@ package request
 import (
 	"mime/multipart"
 	"scam/internal/domain/dto/user"
+	"time"
 
 	"github.com/google/uuid"
 )
@@ -10,6 +11,7 @@ import (
 // RegisterCredentials
 // @Schema
 type RegisterCredentials struct {
+	FullName string `json:"fullName" binding:"required"`
 	Username string `json:"username" binding:"required"`
 	Email    string `json:"email" binding:"required"`
 	Password string `json:"password" binding:"required"`
@@ -61,4 +63,13 @@ type UserListRequest struct {
 	Id       uuid.UUID `json:"id"`
 	Username string    `json:"username"`
 	ImgUrl   string    `json:"imgUrl"`
+}
+
+// UpdateProfileRequest
+// @Schema
+type UpdateProfileRequest struct {
+	FullName  string    `json:"fullName"`
+	Status    string    `json:"status"`
+	Username  string    `json:"username"`
+	BirthDate time.Time `json:"birthDate"`
 }
