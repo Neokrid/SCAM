@@ -28,9 +28,8 @@ type userRepo interface {
 }
 
 type Service struct {
-	tx     trx.TransactionManager
-	logger applogger.Logger
-
+	tx       trx.TransactionManager
+	logger   applogger.Logger
 	userRepo userRepo
 }
 

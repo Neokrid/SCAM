@@ -2,6 +2,7 @@ package request
 
 import (
 	"mime/multipart"
+	"scam/internal/domain/dto/user"
 	"time"
 
 	"github.com/google/uuid"
@@ -42,6 +43,26 @@ type ForgotPasswordRequest struct {
 type ChangeProfilePicture struct {
 	File   *multipart.FileHeader `form:"file" binding:"required"`
 	UserId uuid.UUID
+}
+
+type SendFriendRequest struct {
+	TargetId uuid.UUID `json:"target_id"`
+}
+
+type FriendshipStatusRequest struct {
+	TargetId uuid.UUID `json:"target_id"`
+	Status   string    `json:"status"`
+}
+
+type RequestsResponse struct {
+	Incoming []user.FriendRequestWithUser `json:"incoming"`
+	Outgoing []user.FriendRequestWithUser `json:"outgoing"`
+}
+
+type UserListRequest struct {
+	Id       uuid.UUID `json:"id"`
+	Username string    `json:"username"`
+	ImgUrl   string    `json:"imgUrl"`
 }
 
 // UpdateProfileRequest

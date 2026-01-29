@@ -2,6 +2,7 @@ package container
 
 import (
 	"scam/internal/application/auth"
+	"scam/internal/application/social"
 	userApp "scam/internal/application/user"
 )
 
@@ -15,8 +16,9 @@ func (c *Container) getApplication() *applications {
 type applications struct {
 	c *Container
 
-	user *userApp.Service
-	auth *auth.Service
+	user   *userApp.Service
+	auth   *auth.Service
+	social *social.Service
 }
 
 func (s *applications) getUserApplicationService() *userApp.Service {
@@ -43,4 +45,15 @@ func (s *applications) getAuthApplicationService() *auth.Service {
 		)
 	}
 	return s.auth
+}
+
+func (s *applications) getSocialApplicationService() *social.Service {
+	if s.social == nil {
+		s.social = social.NewService(
+			s.c.getTransactionManager(),
+			s.c.getLogger(),
+			s.c.getServices().getSocialService(),
+		)
+	}
+	return s.social
 }

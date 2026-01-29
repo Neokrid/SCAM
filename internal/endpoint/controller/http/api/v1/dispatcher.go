@@ -2,6 +2,7 @@ package v1
 
 import (
 	"scam/internal/endpoint/controller/http/api/v1/auth"
+	"scam/internal/endpoint/controller/http/api/v1/social"
 	"scam/internal/endpoint/controller/http/api/v1/user"
 
 	"github.com/gin-gonic/gin"
@@ -10,8 +11,9 @@ import (
 type Dispatcher struct {
 	apiPath string
 
-	auth *auth.Controller
-	user *user.Controller
+	auth   *auth.Controller
+	user   *user.Controller
+	social *social.Controller
 }
 
 func NewDispatcher(
@@ -19,11 +21,13 @@ func NewDispatcher(
 
 	auth *auth.Controller,
 	user *user.Controller,
+	social *social.Controller,
 ) *Dispatcher {
 	return &Dispatcher{
 		apiPath: apiPath,
 		auth:    auth,
 		user:    user,
+		social:  social,
 	}
 }
 
@@ -34,6 +38,7 @@ func (d *Dispatcher) Init(router *gin.RouterGroup, authorization gin.HandlerFunc
 		authorizedGroup := api.Group("", authorization)
 		{
 			d.user.Init(api, authorizedGroup)
+			d.social.Init(authorizedGroup)
 		}
 	}
 }

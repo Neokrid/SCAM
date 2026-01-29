@@ -2,6 +2,7 @@ package container
 
 import (
 	"scam/internal/infrastructure/repository/file"
+	"scam/internal/infrastructure/repository/social"
 	tokensRepo "scam/internal/infrastructure/repository/tokens"
 	userRepo "scam/internal/infrastructure/repository/user"
 )
@@ -16,9 +17,10 @@ func (c *Container) getRepositories() *repositories {
 type repositories struct {
 	c *Container
 
-	user  *userRepo.Repository
-	token *tokensRepo.Repository
-	file  *file.Repository
+	user   *userRepo.Repository
+	social *social.Repository
+	token  *tokensRepo.Repository
+	file   *file.Repository
 }
 
 func (r *repositories) getUserRepository() *userRepo.Repository {
@@ -40,4 +42,11 @@ func (r *repositories) getFileRepository() *file.Repository {
 		r.file = file.NewRepository(r.c.getDBPool())
 	}
 	return r.file
+}
+
+func (r *repositories) getSocialRepository() *social.Repository {
+	if r.social == nil {
+		r.social = social.NewRepository(r.c.getDBPool())
+	}
+	return r.social
 }

@@ -30,6 +30,9 @@ const (
 
 // Errors
 const (
-	BindBodyError string = "bind_body"
-	BindPathError string = "bind_path"
+	BindBodyError      string = "bind_body"
+	BindPathError      string = "bind_path"
+	UserIdTypeMismatch string = "type_mismatch"
 )
+
+const FriendRequestStatus string = "pending"
